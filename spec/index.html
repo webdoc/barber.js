@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Barber</title>
+  <!-- Jasmine Test Framework -->
+  <link rel="stylesheet" href="../lib/jasmine.css"/>
+  <script type="text/javascript" src="../lib/jasmine.js"></script>
+  <script type="text/javascript" src="../lib/jasmine-html.js"></script>
+
+  <!-- Lib -->
+  <script type="text/javascript" src="../src/barber.js"></script>
+
+  <!-- Test -->
+  <script type="text/javascript" src="../spec/barber_spec.js"></script>
+</head>
+<body>
+  <script type="text/javascript">
+  (function() {
+    var jasmineEnv = jasmine.getEnv();
+    jasmineEnv.updateInterval = 250;
+
+    /**
+     Create the `HTMLReporter`, which Jasmine calls to provide results of each spec and each suite. The Reporter is responsible for presenting results to the user.
+     */
+    var htmlReporter = new jasmine.HtmlReporter();
+    jasmineEnv.addReporter(htmlReporter);
+
+    /**
+     Delegate filtering of specs to the reporter. Allows for clicking on single suites or specs in the results to only run a subset of the suite.
+     */
+    jasmineEnv.specFilter = function(spec) {
+      return htmlReporter.specFilter(spec);
+    };
+
+    var currentWindowOnload = window.onload;
+    window.addEventListener('load', function(){
+      if (currentWindowOnload) {
+        currentWindowOnload();
+      }
+      execJasmine();
+    }, false);
+
+    function execJasmine() {
+      jasmineEnv.execute();
+    }
+  })();
+  </script>
+</body>
+</html>
